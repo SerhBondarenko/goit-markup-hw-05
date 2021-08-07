@@ -49,6 +49,7 @@ p {
 }
 
 .link {
+  position: relative;
   display: block;
   padding-top: 32px;
   padding-bottom: 32px;
@@ -98,6 +99,9 @@ p {
   line-height: 1.14;
   letter-spacing: 0.02em;
   text-decoration: none;
+  transition-property: color;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 .nav {
   display: flex;
@@ -109,6 +113,17 @@ p {
 }
 .link.current {
   color: var(--accent-color);
+}
+.current::after {
+  position: absolute;
+  display: block;
+  content: '';
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 5px;
+  background-color: var(--accent-color);
+  border-radius: 2px;
 }
 
 .contact:hover,
@@ -170,6 +185,48 @@ p {
   color: var(--white-color);
 }
 /*Главная кнопка*/
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  opacity: 1;
+  transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 528px;
+  min-height: 581px;
+
+  background-color: var(--white-color);
+}
+.close-btn {
+  position: absolute;
+  display: flex;
+  margin: 20px 8px 0 0;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  top: 8px;
+  right: 8px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  cursor: pointer;
+}
 
 .hero-section {
   text-align: center;
@@ -281,6 +338,29 @@ values-item:nth-child(4)::before {
   margin-left: 30px;
 }
 
+.business-actions {
+  position: relative;
+}
+.business-actions img {
+  display: block;
+}
+.actions {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: rgba(47, 48, 58, 0.8);
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  padding: 27px 0 27px 0;
+  color: #999292;
+}
+
 /*Наша команда*/
 
 .section-team {
@@ -340,7 +420,6 @@ values-item:nth-child(4)::before {
 
 .link-item {
   fill: #afb1b8;
-  /*fill: #AFB1B8;*/
   display: flex;
   width: 44px;
   height: 44px;
@@ -348,7 +427,12 @@ values-item:nth-child(4)::before {
   background-color: var(--white-color);
   align-items: center;
   justify-content: center;
+
+  transition-property: background-color;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 .links-list li + li {
   margin-left: 10px;
 }
@@ -388,6 +472,9 @@ values-item:nth-child(4)::before {
   box-sizing: border-box;
   border-radius: 4px;
   fill: #afb1b8;
+  transition-property: fill;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 .client-item:hover,
 .client-item:focus {
@@ -418,6 +505,9 @@ address a {
   line-height: 1.7;
   letter-spacing: 0.03em;
   color: rgba(255, 255, 255, 0.6);
+  transition-property: color;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 .contact-info:hover,
 .contact-info:focus {
@@ -492,7 +582,12 @@ address a {
   align-items: center;
   justify-content: center;
   background: rgba(255, 255, 255, 0.1);
+
+  transition-property: background-color;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 .join-item:hover,
 .join-item:focus {
   background-color: var(--accent-color);
@@ -535,6 +630,8 @@ address a {
   letter-spacing: 0.03em;
   color: var(--title-text-color);
   background-color: #f5f4fa;
+
+  transition: 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /*Портфолио работ*/
@@ -558,6 +655,9 @@ address a {
 .cursor:focus {
   color: var(--white-color);
   background-color: var(--accent-color);
+  box-shadow: 0px 3px 1px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.08),
+    0px 2px 2px rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
 }
 
 .project {
@@ -588,6 +688,35 @@ address a {
   width: 370px;
   border: 1px solid #eeeeee;
   box-sizing: border-box;
+}
+
+.flex-element:hover .overlay,
+.flex-element a:focus .overlay {
+  opacity: 1;
+}
+
+.thumb {
+  position: relative;
+  overflow: hidden;
+}
+
+.overlay {
+  top: 0;
+  position: absolute;
+  padding: 71px 24px 55px 24px;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  font-size: 18px;
+  line-height: 1.56;
+  letter-spacing: 0.03em;
+  background: rgba(33, 150, 243, 0.9);
+  transform: translateY(100%);
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  color: var(--white-color);
+}
+.flex-element:hover .overlay {
+  transform: translateY(0);
 }
 
 .flex-element:hover {
